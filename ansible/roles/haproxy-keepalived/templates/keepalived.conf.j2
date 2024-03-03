@@ -1,0 +1,21 @@
+vrrp_script chk_haproxy {
+    script 'killall -0 haproxy' # faster than pidof
+    interval 2
+}
+
+vrrp_instance haproxy-vip {
+    interface {{ cluster_lb_internal_interface }}
+    state {% if inventory_hostname == groups['server'][0] %}MASTER{% else %}BACKUP{% endif %}
+    
+    priority {% if inventory_hostname == groups['server'][0] %}200{% else %}100{% endif %}
+
+    virtual_router_id 51
+
+    virtual_ipaddress {
+        {{ cluster_lb_internal_ip }}/24
+    }
+
+    track_script {
+        chk_haproxy
+    }
+}

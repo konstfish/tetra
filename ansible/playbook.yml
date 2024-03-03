@@ -1,0 +1,42 @@
+- name: Shoal Host Setup
+  hosts: k3s_cluster
+  serial: 6
+  roles:
+    - basic-setup
+
+- name: Cluster prep
+  hosts: k3s_cluster
+  become: true
+  serial: 6
+  roles:
+    - role: k3s-ansible/roles/prereq
+    - role: k3s-ansible/roles/airgap
+    - role: k3s-ansible/roles/raspberrypi
+
+- name: Setup K3S server
+  hosts: server
+  become: true
+  serial: 6
+  roles:
+    - role: k3s-ansible/roles/k3s_server
+
+- name: Setup haproxy & keepalived
+  hosts: server
+  become: true
+  serial: 6
+  roles:
+    - role: haproxy-keepalived
+
+- name: Setup K3S agent
+  hosts: agent
+  become: true
+  serial: 6
+  roles:
+    - role: k3s-ansible/roles/k3s_agent
+
+- name: Get config
+  hosts: server[0]
+  become: true
+  roles:
+    - role: k3s-post
+      cluster_name: "shoal"

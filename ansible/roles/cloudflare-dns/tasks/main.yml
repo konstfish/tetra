@@ -1,0 +1,34 @@
+---
+# tasks file for cloudflare-dns
+
+- name: Fetch public IP address
+  uri:
+    url: "https://api.ipify.org?format=json"
+    return_content: yes
+  register: public_ip
+
+- name: Display public IP
+  debug:
+    msg: "Public IP: {{ public_ip.json.ip }}"
+
+- name: Create A records
+  community.general.cloudflare_dns:
+    zone: "{{ cloudflare_zone }}"
+    record: "{{ item.record }}"
+    type: A
+    value: "{{ public_ip.json.ip }}"
+    proxied: "{{ item.proxied }}"
+    api_token: "{{ cloudflare_api_key }}"
+    state: present
+  loop: "{{ cloudflare_record_list }}"
+
+- name: Create Custom Records
+  community.general.cloudflare_dns:
+    zone: "{{ cloudflare_zone }}"
+    record: "{{ item.record }}"
+    type: "{{ item.type }}"
+    value: "{{ item.value }}"
+    proxied: "{{ item.proxied }}"
+    api_token: "{{ cloudflare_api_key }}"
+    state: present
+  loop: "{{ cloudflare_custom_record_list | default([]) }}"

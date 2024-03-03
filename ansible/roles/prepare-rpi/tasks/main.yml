@@ -1,0 +1,19 @@
+---
+
+# disable swap
+- name: Turn off swap temporarily
+  command: swapoff -a
+  changed_when: false
+
+- name: Disable and stop dphys-swapfile service
+  systemd:
+    name: dphys-swapfile
+    enabled: no
+    state: stopped
+
+- name: Update CONF_SWAPSIZE to 0 in /etc/dphys-swapfile
+  lineinfile:
+    path: /etc/dphys-swapfile
+    regexp: '^CONF_SWAPSIZE='
+    line: 'CONF_SWAPSIZE=0'
+    state: present

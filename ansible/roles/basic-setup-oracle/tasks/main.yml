@@ -1,0 +1,86 @@
+---
+
+- name: Check if iptables are already dropped
+  stat:
+    path: /root/iptables-rules
+  register: iptables_drop
+
+- block:
+  - name: Save existing iptables
+    command: >
+      touch /root/iptables-rules
+    become: true
+
+  - name: Drop IPTABLES INPUT
+    command: >
+      iptables -P INPUT ACCEPT
+    become: true
+
+  - name: Drop IPTABLES OUTPUT
+    command: >
+      iptables -P OUTPUT ACCEPT
+    become: true
+
+  - name: Drop IPTABLES FORWARD
+    command: >
+      iptables -P FORWARD ACCEPT
+    become: true
+
+  - name: FLush IPTABLES
+    command: >
+      iptables -F
+    become: true
+
+  - name: Flush IPTABLES again
+    command: >
+      iptables --flush
+    become: true
+  
+  when: not iptables_drop.stat.exists
+
+# UFW
+
+- name: Allow all access from 10.0.1.0/24 subnet to host
+  community.general.ufw:
+    rule: allow
+    src: 10.0.1.0/24
+  notify: Reload UFW
+
+- name: Allow all access from 10.0.2.0/24 subnet to host
+  community.general.ufw:
+    rule: allow
+    src: 10.0.2.0/24
+  notify: Reload UFW
+
+# sudo iptables -I INPUT 1 -s 172.17.0.1/14 -j ACCEPT
+- name: Allow all access from docker containers
+  community.general.ufw:
+    rule: allow
+    src: 172.17.0.1/12
+  notify: Reload UFW
+  
+# ports  
+- name: Allow all access to specified ports
+  community.general.ufw:
+    rule: allow
+    port: '{{ item }}'
+  loop: "{{ allow_ports | default([]) }}"
+  notify: Reload UFW
+  
+- name: Deny all incoming by default with UFW
+  community.general.ufw:
+    direction: incoming
+    policy: deny
+  notify: Reload UFW
+  
+- name: Allow all outgoing by default with UFW
+  community.general.ufw:
+    direction: outgoing
+    policy: allow
+  notify: Reload UFW
+  
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+
+#iptables -I INPUT 6 -m state --state NEW -p tcp --dport 443 -j ACCEPT

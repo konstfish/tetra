@@ -1,0 +1,4 @@
+---
+# defaults file for basic-setup
+
+cluster_name: "k3s"

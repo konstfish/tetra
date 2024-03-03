@@ -1,0 +1,8 @@
+---
+# handlers file for basic-setup
+
+- name: Restart Docker Service
+  systemd:
+    name: "docker"
+    daemon_reload: yes
+    state: restarted

@@ -1,0 +1,41 @@
+grafana:
+  sidecar:
+    enableUniqueFilenames: true
+    dashboards:
+      enabled: true
+      searchNamespace: ALL
+      provider:
+        foldersFromFilesStructure: true
+    datasources:
+      enabled: true
+      searchNamespace: ALL
+  grafana.ini:
+    auth.proxy:
+      enabled: true
+      header_name: cf-access-authenticated-user-email
+      header_property: email
+      auto_sign_up: true
+      enable_login_token: false
+    users:
+      auto_assign_org_role: Admin
+  ingress:
+    enabled: true
+    ingressClassName: cloudflare-tunnel
+    hosts:
+      - cluster-grafana.konst.fish
+    path: /
+  additionalDataSources:
+    - name: Tempo
+      type: tempo
+      uid: tempo
+      access: proxy
+      url: "http://tempo.monitoring:3100"
+      version: 1
+      isDefault: false
+      jsonData:
+        httpMethod: GET
+        serviceMap:
+          datasourceUid: 'prometheus'
+prometheus:
+  prometheusSpec:
+    enableRemoteWriteReceiver: true

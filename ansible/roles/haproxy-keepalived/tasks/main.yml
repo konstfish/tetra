@@ -1,0 +1,25 @@
+---
+
+# install haproxy & keepalived
+- name: install haproxy
+  apt: 
+    name: haproxy 
+    state: present
+  
+- name: install keepalived
+  apt: 
+    name: keepalived 
+    state: present
+
+# template configs
+- name: template haproxy.cfg
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+  notify: restart haproxy
+
+- name: template keepalived.conf
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+  notify: restart keepalived

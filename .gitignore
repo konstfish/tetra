@@ -1,0 +1,15 @@
+.secret*
+.env
+.terraform
+.terraform*
+azuresetup
+.DS_Store
+.github
+cloud-init2.yml
+ansible/inventory.yml
+ansible/artifacts
+terraform.tfstate*
+terraform.tfvars
+ssh_key
+etc
+all.yml
