@@ -1,6 +1,4 @@
 resource "helm_release" "mongodb_operator" {
-  count = var.install_mongodb_operator ? 1 : 0
-
   name             = "mongodb-operator"
   repository       = "https://mongodb.github.io/helm-charts"
   chart            = "community-operator"

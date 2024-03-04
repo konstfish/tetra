@@ -17,7 +17,6 @@ k3s_cluster:
           ansible_ssh_host: "${node.ansible_ssh_host}"
           extra_agent_args: "--node-ip ${node.ansible_host}"
           api_endpoint: "${cluster_lb_internal_ip}"
-          api_port: 6440
 %{ endfor ~}
 
   vars:

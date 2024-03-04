@@ -12,6 +12,10 @@ resource "hcloud_network_subnet" "cluster_network" {
   ip_range     = var.cluster_network_subnet_range
 }
 
+data "http" "runner_public_ip" {
+  url = "https://api.ipify.org"
+}
+
 resource "hcloud_firewall" "default" {
   name = "vcn-firewall-${var.cluster_name}"
   rule {
@@ -28,8 +32,7 @@ resource "hcloud_firewall" "default" {
     protocol  = "tcp"
     port      = "80"
     source_ips = [
-      "0.0.0.0/0",
-      "::/0"
+      join("/", [hcloud_load_balancer_network.lb_network.ip, "32"])
     ]
   }
 
@@ -38,8 +41,7 @@ resource "hcloud_firewall" "default" {
     protocol  = "tcp"
     port      = "443"
     source_ips = [
-      "0.0.0.0/0",
-      "::/0"
+      join("/", [hcloud_load_balancer_network.lb_network.ip, "32"])
     ]
   }
 
@@ -47,14 +49,14 @@ resource "hcloud_firewall" "default" {
     direction  = "in"
     protocol   = "tcp"
     port       = "22"
-    source_ips = var.cluster_firewall_allow_ips
+    source_ips = concat(var.cluster_firewall_allow_ips, [join("/", [data.http.runner_public_ip.response_body, "32"])])
   }
 
   rule {
     direction  = "in"
     protocol   = "tcp"
     port       = "6443"
-    source_ips = var.cluster_firewall_allow_ips
+    source_ips = concat(var.cluster_firewall_allow_ips, [join("/", [hcloud_load_balancer_network.lb_network.ip, "32"]), join("/", [data.http.runner_public_ip.response_body, "32"])])
   }
 
 }

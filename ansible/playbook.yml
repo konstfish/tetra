@@ -13,13 +13,6 @@
     - role: k3s-ansible/roles/airgap
     - role: k3s-ansible/roles/raspberrypi
 
-- name: Setup haproxy & keepalived
-  hosts: server
-  become: true
-  serial: 6
-  roles:
-    - role: haproxy-keepalived
-
 - name: Setup K3S server
   hosts: server
   become: true
@@ -39,4 +32,4 @@
   become: true
   roles:
     - role: k3s-post
-      cluster_name: "shoal"
+      cluster_name: "tetra"

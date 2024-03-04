@@ -3,13 +3,13 @@
 - name: Fetch k3s.yaml from remote host
   ansible.builtin.fetch:
     src: /etc/rancher/k3s/k3s.yaml
-    dest: terraform/{{ cluster_name }}.yaml
+    dest: artifacts/{{ cluster_name }}.yaml
     flat: yes
 
 - name: Replace 127.0.0.1 with Server (#1) IP in k3s.yaml
   ansible.builtin.replace:
-    path: artifacts/{{ cluster_name }}.yaml
+    path: artifacts/{{ cluster_name }}.yml
     regexp: '127\.0\.0\.1'
-    replace: "{{ api_endpoint }}"
+    replace: "{{ lb_public_address }}"
   delegate_to: localhost
   become: false

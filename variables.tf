@@ -102,7 +102,7 @@ variable "cluster_load_balancer_type" {
 variable "cluster_firewall_allow_ips" {
   description = "The list of ports to allow in the firewall."
   type        = list(string)
-  default     = ["0.0.0.0/0", "::/0"]
+  default     = []
 }
 
 // Hetzner General

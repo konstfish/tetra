@@ -15,7 +15,7 @@ resource "hcloud_load_balancer_network" "lb_network" {
 resource "hcloud_load_balancer_target" "lb_target" {
   type             = "label_selector"
   load_balancer_id = hcloud_load_balancer.lb.id
-  label_selector   = "cluster=${var.cluster_name}"
+  label_selector   = "role=controller"
   use_private_ip   = true
 
   depends_on = [
@@ -49,6 +49,22 @@ resource "hcloud_load_balancer_service" "lb_service_443" {
   health_check {
     protocol = "tcp"
     port     = 443
+
+    interval = 10
+    timeout  = 5
+  }
+}
+
+resource "hcloud_load_balancer_service" "lb_service_6443" {
+  load_balancer_id = hcloud_load_balancer.lb.id
+  protocol         = "tcp"
+
+  listen_port      = 6443
+  destination_port = 6443
+
+  health_check {
+    protocol = "tcp"
+    port     = 6443
 
     interval = 10
     timeout  = 5

@@ -4,6 +4,20 @@ terraform {
       source  = "hetznercloud/hcloud"
       version = "~> 1.44"
     }
+
+    http = {
+      source  = "hashicorp/http"
+      version = "~> 3.4.2"
+    }
+  }
+}
+
+provider "http" {}
+
+provider "helm" {
+  kubernetes {
+    config_path = "${path.module}/ansible/artifacts/tetra.yml"
+    insecure = "true"
   }
 }
 
