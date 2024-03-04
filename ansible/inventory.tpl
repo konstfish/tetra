@@ -8,7 +8,6 @@ k3s_cluster:
           ansible_host: "${node.ansible_host}"
           ansible_ssh_host: "${node.ansible_ssh_host}"
           extra_server_args: "--advertise-address ${node.ansible_host} --node-ip ${node.ansible_host} --tls-san ${cluster_lb_internal_ip} --disable=traefik --disable=servicelb --disable=local-storage"
-          api_port: 6444
 %{ endfor ~}
     agent:
       hosts:
@@ -18,6 +17,7 @@ k3s_cluster:
           ansible_ssh_host: "${node.ansible_ssh_host}"
           extra_agent_args: "--node-ip ${node.ansible_host}"
           api_endpoint: "${cluster_lb_internal_ip}"
+          api_port: 6440
 %{ endfor ~}
 
   vars:

@@ -11,8 +11,17 @@ vrrp_instance haproxy-vip {
 
     virtual_router_id 51
 
+    unicast_src_ip {{ hostvars[inventory_hostname]['ansible_host'] }}
+    unicast_peer {
+{% for host in groups['server'] %}
+{% if host != inventory_hostname %}
+        {{ hostvars[host]['ansible_host'] }}
+{% endif %}
+{% endfor %}
+    }
+
     virtual_ipaddress {
-        {{ cluster_lb_internal_ip }}/24
+        {{ cluster_lb_internal_ip }}/32 brd {{ hostvars[inventory_hostname]['ansible_host'] }} dev {{ cluster_lb_internal_interface }} label {{ cluster_lb_internal_interface }}:10
     }
 
     track_script {
