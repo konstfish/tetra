@@ -31,6 +31,5 @@ k3s_cluster:
     api_endpoint: "{{ hostvars[groups['server'][0]]['ansible_host'] | default(groups['server'][0]) }}"
     extra_server_args: "--disable=traefik --disable=servicelb --disable=local-storage"
     extra_agent_args: ""
-
     internal_interface: enp7s0
     common_args: "--flannel-iface {{ internal_interface }} "

@@ -23,11 +23,15 @@ resource "helm_release" "cert_manager" {
     name  = "installCRDs"
     value = "true"
   }
+
+  depends_on = [ helm_release.ingress_nginx ]
 }
 
 // todo template this
 resource "kubernetes_manifest" "letsencrypt_http_cluster_issuer" {
   manifest = yamldecode(file("${path.module}/cluster/cert-manager/ca.yml"))
+
+  depends_on = [ helm_release.cert_manager ]
 }
 
 resource "helm_release" "external_dns" {
@@ -55,4 +59,6 @@ resource "helm_release" "external_dns" {
     name  = "cloudflare.proxied"
     value = false
   }
+
+  depends_on = [ helm_release.ingress_nginx ]
 }

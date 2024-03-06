@@ -3,7 +3,7 @@
 - name: Fetch k3s.yaml from remote host
   ansible.builtin.fetch:
     src: /etc/rancher/k3s/k3s.yaml
-    dest: artifacts/{{ cluster_name }}.yaml
+    dest: artifacts/{{ cluster_name }}.yml
     flat: yes
 
 - name: Replace 127.0.0.1 with Server (#1) IP in k3s.yaml

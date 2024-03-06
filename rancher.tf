@@ -7,5 +7,11 @@ resource "helm_release" "rancher" {
 
   values = [
     file("${path.module}/cluster/helm/rancher/values.yml")
-  ] 
+  ]
+
+  depends_on = [ 
+    helm_release.cert_manager,
+    helm_release.external_dns,
+    helm_release.ingress_nginx
+   ]
 }
