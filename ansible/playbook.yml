@@ -1,17 +1,17 @@
-- name: Shoal Host Setup
-  hosts: k3s_cluster
-  serial: 6
-  roles:
-    - basic-setup
+#- name: Shoal Host Setup
+#  hosts: k3s_cluster
+#  serial: 6
+#  roles:
+#    - basic-setup
 
-- name: Cluster prep
-  hosts: k3s_cluster
-  become: true
-  serial: 6
-  roles:
-    - role: k3s-ansible/roles/prereq
-    - role: k3s-ansible/roles/airgap
-    - role: k3s-ansible/roles/raspberrypi
+#- name: Cluster prep
+#  hosts: k3s_cluster
+#  become: true
+#  serial: 6
+#  roles:
+#    - role: k3s-ansible/roles/prereq
+#    - role: k3s-ansible/roles/airgap
+#    - role: k3s-ansible/roles/raspberrypi
 
 - name: Setup K3S server
   hosts: server

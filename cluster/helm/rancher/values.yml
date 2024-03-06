@@ -1,0 +1,11 @@
+hostname: rancher.konst.fish
+
+ingress:
+  enabled: false
+  tls:
+    source: letsEncrypt	
+
+letsEncrypt:
+  email: david@konst.fish
+  ingress:
+    class: nginx

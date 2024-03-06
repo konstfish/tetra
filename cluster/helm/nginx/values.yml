@@ -1,6 +1,9 @@
 controller:
   nodeSelector:
     node-role.kubernetes.io/control-plane: "true"
-  kind: daemonset
+  kind: DaemonSet
   service:
     type: NodePort
+  hostNetwork: true
+  hostPort:
+    enabled: true

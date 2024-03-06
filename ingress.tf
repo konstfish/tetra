@@ -1,7 +1,7 @@
-resource "helm_release" "nginx_ingress" {
-  name             = "nginx-ingress"
-  repository       = "https://helm.nginx.com/stable"
-  chart            = "nginx-ingress"
+resource "helm_release" "ingress_nginx" {
+  name             = "ingress-nginx"
+  repository       = "https://kubernetes.github.io/ingress-nginx"
+  chart            = "ingress-nginx"
   namespace        = "ingress-nginx"
   create_namespace = true
 
@@ -22,5 +22,37 @@ resource "helm_release" "cert_manager" {
   set {
     name  = "installCRDs"
     value = "true"
+  }
+}
+
+// todo template this
+resource "kubernetes_manifest" "letsencrypt_http_cluster_issuer" {
+  manifest = yamldecode(file("${path.module}/cluster/cert-manager/ca.yml"))
+}
+
+resource "helm_release" "external_dns" {
+  name       = "external-dns"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "external-dns"
+  namespace  = "external-dns"
+  create_namespace = true
+  set {
+    name  = "provider"
+    value = "cloudflare"
+  }
+
+  set {
+    name  = "cloudflare.apiToken"
+    value = var.cloudflare_api_token
+  }
+
+  set {
+    name  = "cloudflare.email"
+    value = var.cloudflare_acount_email
+  }
+
+  set {
+    name  = "cloudflare.proxied"
+    value = false
   }
 }

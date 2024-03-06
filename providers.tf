@@ -21,6 +21,12 @@ provider "helm" {
   }
 }
 
+provider "kubernetes" {
+  config_path = "${path.module}/ansible/artifacts/tetra.yml"
+  insecure = "true"
+}
+
+
 provider "hcloud" {
   token = var.hcloud_token
 }

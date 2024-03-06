@@ -140,6 +140,11 @@ variable "cloudflare_acount_id" {
   type        = string
 }
 
+variable "cloudflare_acount_email" {
+  description = "The Cloudflare Account email"
+  type        = string
+}
+
 variable "cloudflare_tunnel_name" {
   description = "The name for the Cloudflare Tunnel (will be created by helm chart)."
   type        = string
