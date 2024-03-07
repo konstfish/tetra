@@ -13,5 +13,3 @@ cluster_controller_node_count = 3
 
 cluster_node_type  = "cax11"
 cluster_node_count = 3
-
-cluster_token = "xxx"

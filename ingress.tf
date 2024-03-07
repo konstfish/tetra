@@ -50,10 +50,10 @@ resource "helm_release" "external_dns" {
     value = var.cloudflare_api_token
   }
 
-  set {
+  /*set {
     name  = "cloudflare.email"
     value = var.cloudflare_acount_email
-  }
+  }*/
 
   set {
     name  = "cloudflare.proxied"
