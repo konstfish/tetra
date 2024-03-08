@@ -5,6 +5,8 @@ ingress:
   tls:
     source: letsEncrypt
   ingressClassName: nginx
+  extraAnnotations:
+    external-dns.alpha.kubernetes.io/hostname: "rancher.konst.fish"
   
 letsEncrypt:
   email: david@konst.fish

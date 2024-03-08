@@ -1,0 +1,19 @@
+# https://github.com/gravitational/teleport/blob/master/examples/chart/teleport-cluster/values.yaml#L483
+
+clusterName: teleport.konst.fish
+proxyListenerMode: multiplex
+acme: true
+acmeEmail: david@konst.fish
+
+proxy:
+  service:
+    type: ClusterIP
+
+ingress:
+  enabled: true
+  spec:
+    ingressClassName: nginx
+
+annotations:
+  ingress:
+    external-dns.alpha.kubernetes.io/hostname: "teleport.konst.fish"

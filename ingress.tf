@@ -9,6 +9,11 @@ resource "helm_release" "ingress_nginx" {
     file("${path.module}/cluster/helm/nginx/values.yml"),
   ]
 
+  set {
+    name  = "controller.service.externalIPs[0]"
+    value = hcloud_load_balancer.lb.ipv4
+  }
+
   depends_on = [ local_file.ansible_inventory ]
 }
 
@@ -49,16 +54,15 @@ resource "helm_release" "external_dns" {
     name  = "cloudflare.apiToken"
     value = var.cloudflare_api_token
   }
+  set {
+    name  = "cloudflare.proxied"
+    value = false
+  }
 
   /*set {
     name  = "cloudflare.email"
     value = var.cloudflare_acount_email
   }*/
-
-  set {
-    name  = "cloudflare.proxied"
-    value = false
-  }
 
   depends_on = [ helm_release.ingress_nginx ]
 }

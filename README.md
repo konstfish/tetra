@@ -8,10 +8,6 @@ Defaults are pretty sensible, see [./variables.tf](./variables.tf) & [./terrafor
 
 ## Usage
 ```
-export TF_VAR_hcloud_token="xxx"
-export TF_VAR_cloudflare_api_token="xxx"
-export TF_VAR_cloudflare_acount_id="xxx"
-
 terraform init
 terraform plan
 terraform apply

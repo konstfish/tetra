@@ -1,0 +1,24 @@
+clusterName: teleport.konst.fish
+proxyListenerMode: multiplex
+acme: true
+acmeEmail: david@konst.fish
+
+proxy:
+  service:
+    type: ClusterIP
+
+ingress:
+  enabled: true
+  spec:
+    ingressClassName: nginx
+
+highAvailability:
+  certManager:
+    enabled: true
+    issuerName: letsencrypt-http
+
+annotations:
+  ingress:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-http"
+    external-dns.alpha.kubernetes.io/hostname: "teleport.konst.fish"
