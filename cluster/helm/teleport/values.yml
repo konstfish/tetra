@@ -1,19 +1,30 @@
-# https://github.com/gravitational/teleport/blob/master/examples/chart/teleport-cluster/values.yaml#L483
-
 clusterName: teleport.konst.fish
 proxyListenerMode: multiplex
-acme: true
+
+
+acme: false
 acmeEmail: david@konst.fish
 
 proxy:
   service:
     type: ClusterIP
 
+service:
+  type: ClusterIP
+
 ingress:
   enabled: true
   spec:
     ingressClassName: nginx
 
+highAvailability:
+  certManager:
+    enabled: true
+    issuerName: letsencrypt-dns
+    issuerKind: ClusterIssuer
+
 annotations:
   ingress:
-    external-dns.alpha.kubernetes.io/hostname: "teleport.konst.fish"
+    cert-manager.io/cluster-issuer: "letsencrypt-dns"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    # external-dns.alpha.kubernetes.io/hostname: "teleport.konst.fish"

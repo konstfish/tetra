@@ -17,28 +17,6 @@ resource "helm_release" "ingress_nginx" {
   depends_on = [ local_file.ansible_inventory ]
 }
 
-resource "helm_release" "cert_manager" {
-  name       = "cert-manager"
-  repository = "https://charts.jetstack.io"
-  chart      = "cert-manager"
-  namespace = "cert-manager"
-    create_namespace = true
-
-  set {
-    name  = "installCRDs"
-    value = "true"
-  }
-
-  depends_on = [ helm_release.ingress_nginx ]
-}
-
-// todo template this
-resource "kubernetes_manifest" "letsencrypt_http_cluster_issuer" {
-  manifest = yamldecode(file("${path.module}/cluster/cert-manager/ca.yml"))
-
-  depends_on = [ helm_release.cert_manager ]
-}
-
 resource "helm_release" "external_dns" {
   name       = "external-dns"
   repository = "https://charts.bitnami.com/bitnami"

@@ -10,6 +10,13 @@ resource "kubernetes_namespace" "teleport_cluster" {
   }
 
   depends_on = [ local_file.ansible_inventory ]
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.labels,
+      metadata.0.annotations,
+    ]
+  }
 }
 
 resource "helm_release" "teleport_cluster" {
@@ -22,7 +29,7 @@ resource "helm_release" "teleport_cluster" {
     file("${path.module}/cluster/helm/teleport/values.yml")
   ]
 
-  timeout = 200
+  timeout = 250
 
   depends_on = [
     local_file.ansible_inventory,

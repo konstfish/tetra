@@ -8,6 +8,13 @@ resource "kubernetes_namespace" "longhorn_system" {
       "management.cattle.io/system-namespace" = "true"
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.labels,
+      metadata.0.annotations,
+    ]
+  }
 }
 
 resource "kubernetes_secret" "longhorn_backup_secret" {
