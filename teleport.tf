@@ -1,3 +1,4 @@
+/*
 resource "kubernetes_namespace" "teleport_cluster" {
   metadata {
     name = "teleport-cluster"
@@ -36,3 +37,4 @@ resource "helm_release" "teleport_cluster" {
     kubernetes_namespace.teleport_cluster
   ]
 }
+*/

@@ -33,3 +33,6 @@ k3s_cluster:
     extra_agent_args: ""
     internal_interface: enp7s0
     common_args: "--flannel-iface {{ internal_interface }} "
+    server_config_yaml: |
+      cluster-cidr: "10.44.0.0/16"
+      service-cidr: "10.45.0.0/16"
