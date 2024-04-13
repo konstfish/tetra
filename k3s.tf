@@ -35,6 +35,8 @@ resource "local_file" "ansible_inventory" {
       SSH_PRIVATE_KEY           = nonsensitive(tls_private_key.ansible.private_key_openssh)
     }
   }
+
+  depends_on = [ hcloud_load_balancer_service.lb_service_6443 ]
 }
 
 output "controller_node_list" {
