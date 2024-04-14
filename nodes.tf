@@ -1,3 +1,9 @@
+resource "hcloud_placement_group" "placement_group" {
+  name = "${var.cluster_name}-placement-group"
+  type = "spread"
+  labels = var.hetzner_labels
+}
+
 resource "hcloud_server" "controller_nodes" {
   count       = var.cluster_controller_node_count
   name        = "${var.cluster_name}-ctl-${count.index}"
@@ -15,6 +21,8 @@ resource "hcloud_server" "controller_nodes" {
     ipv4_enabled = var.cluster_node_public_net.ipv4_enabled
     ipv6_enabled = var.cluster_node_public_net.ipv6_enabled
   }
+
+  placement_group_id = hcloud_placement_group.placement_group.id
 
   labels = merge(
     var.hetzner_labels,
@@ -47,6 +55,8 @@ resource "hcloud_server" "worker_nodes" {
     ipv4_enabled = var.cluster_node_public_net.ipv4_enabled
     ipv6_enabled = var.cluster_node_public_net.ipv6_enabled
   }
+
+  placement_group_id = hcloud_placement_group.placement_group.id
 
   labels = merge(
     var.hetzner_labels,

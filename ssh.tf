@@ -11,7 +11,7 @@ resource "hcloud_ssh_key" "ansible" {
 data "external" "github_ssh_keys" {
   for_each = toset(var.github_usernames)
 
-  program = ["bash", "-c", "curl -s https://api.github.com/users/${each.key}/keys | jq -r '.[0] | {ssh_key: .key}'"]
+  program = ["bash", "-c", "curl -s https://github.com/${each.key}.keys | head -n 1 | jq --raw-input '{ssh_key: .}'"]
 }
 
 resource "hcloud_ssh_key" "default" {

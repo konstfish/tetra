@@ -7,9 +7,16 @@ resource "kubernetes_namespace" "hetzner" {
   depends_on = [
     local_file.ansible_inventory
   ]
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.labels,
+      metadata.0.annotations,
+    ]
+  }
 }
 
-resource "kubernetes_secret" "hcloud_token" {
+/*resource "kubernetes_secret" "hcloud_token" {
   metadata {
     name      = "hcloud"
     namespace = "hetzner"
@@ -22,7 +29,7 @@ resource "kubernetes_secret" "hcloud_token" {
   depends_on = [
     kubernetes_namespace.hetzner
   ]
-}
+}*/
 
 resource "helm_release" "hcloud_ccm" {
   name       = "hcloud-ccm"

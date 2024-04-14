@@ -29,7 +29,7 @@ k3s_cluster:
     lb_public_address: ${lb_public_address}
     cluster_lb_internal_ip: ${cluster_lb_internal_ip}
     api_endpoint: "{{ hostvars[groups['server'][0]]['ansible_host'] | default(groups['server'][0]) }}"
-    extra_server_args: "--disable=traefik --disable=servicelb --disable=local-storage"
+    extra_server_args: "--disable=traefik --disable=local-storage" # --disable=servicelb
     extra_agent_args: ""
     internal_interface: enp7s0
     common_args: "--flannel-iface {{ internal_interface }} "

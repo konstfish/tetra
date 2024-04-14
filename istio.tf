@@ -1,5 +1,4 @@
-/*
-resource "helm_release" "istio_base" {
+resource "helm_release" "istio" {
   name             = "istio-base"
   repository       = "https://istio-release.storage.googleapis.com/charts"
   chart            = "base"
@@ -11,7 +10,7 @@ resource "helm_release" "istio_base" {
     value = "default"
   }
 
-  depends_on = [ kubernetes_namespace.istio ]
+  depends_on = [ local_file.ansible_inventory ]
 }
 
 resource "helm_release" "istiod" {
@@ -50,11 +49,6 @@ resource "helm_release" "istio_ingress" {
   namespace        = "istio-ingress"
   create_namespace = true
 
-  set {
-    name  = "defaults.service.externalIPs[0]"
-    value = helm_release.clo
-  }
-
   values = [
     file("${path.module}/cluster/helm/istio/values.yml")
   ]
@@ -70,4 +64,3 @@ resource "helm_release" "kiali" {
 
   depends_on = [ helm_release.istiod ]
 }
-*/
