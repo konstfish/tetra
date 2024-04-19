@@ -16,21 +16,6 @@ resource "kubernetes_namespace" "hetzner" {
   }
 }
 
-/*resource "kubernetes_secret" "hcloud_token" {
-  metadata {
-    name      = "hcloud"
-    namespace = "hetzner"
-  }
-
-  data = {
-    "token" = var.hcloud_token
-  }
-
-  depends_on = [
-    kubernetes_namespace.hetzner
-  ]
-}*/
-
 resource "helm_release" "hcloud_ccm" {
   name       = "hcloud-ccm"
   namespace  = "hetzner"
@@ -39,7 +24,8 @@ resource "helm_release" "hcloud_ccm" {
   timeout    = 100
 
   depends_on = [
-    kubernetes_namespace.hetzner
+    kubernetes_namespace.hetzner,
+    kubernetes_secret.hcloud_token
   ]
 }
 
@@ -56,6 +42,21 @@ resource "helm_release" "hcloud_csi_driver" {
   }
 
   depends_on = [
-    helm_release.hcloud_ccm
+    kubernetes_namespace.hetzner
+  ]
+}
+
+resource "kubernetes_secret" "hcloud_token" {
+  metadata {
+    name      = "hcloud"
+    namespace = "hetzner"
+  }
+
+  data = {
+    "token" = var.hcloud_token
+  }
+
+  depends_on = [
+    kubernetes_namespace.hetzner
   ]
 }
