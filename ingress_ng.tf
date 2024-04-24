@@ -14,14 +14,14 @@ resource "helm_release" "ingress_nginx" {
     value = hcloud_load_balancer.lb.ipv4
   }
 
-  depends_on = [ local_file.ansible_inventory ]
+  depends_on = [local_file.ansible_inventory]
 }
 
 resource "helm_release" "external_dns" {
-  name       = "external-dns"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "external-dns"
-  namespace  = "external-dns"
+  name             = "external-dns"
+  repository       = "https://charts.bitnami.com/bitnami"
+  chart            = "external-dns"
+  namespace        = "external-dns"
   create_namespace = true
   set {
     name  = "provider"
@@ -42,5 +42,5 @@ resource "helm_release" "external_dns" {
     value = var.cloudflare_acount_email
   }*/
 
-  depends_on = [ helm_release.ingress_nginx ]
+  depends_on = [helm_release.ingress_nginx]
 }

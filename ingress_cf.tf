@@ -9,7 +9,7 @@ resource "kubernetes_namespace" "cloudflare_tunnel_ingress_controller" {
     }
   }
 
-  depends_on = [ local_file.ansible_inventory ]
+  depends_on = [local_file.ansible_inventory]
 
   lifecycle {
     ignore_changes = [

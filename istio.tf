@@ -6,40 +6,40 @@ resource "helm_release" "istio" {
   create_namespace = true
 
   set {
-    name = "defaultRevision"
+    name  = "defaultRevision"
     value = "default"
   }
 
-  depends_on = [ local_file.ansible_inventory ]
+  depends_on = [local_file.ansible_inventory]
 }
 
 resource "helm_release" "istiod" {
-  name             = "istiod"
-  repository       = "https://istio-release.storage.googleapis.com/charts"
-  chart            = "istiod"
-  namespace        = "istio-system"
+  name       = "istiod"
+  repository = "https://istio-release.storage.googleapis.com/charts"
+  chart      = "istiod"
+  namespace  = "istio-system"
 
   set {
-    name = "defaults.global.meshID"
+    name  = "defaults.global.meshID"
     value = "shoal"
   }
 
   set {
-    name = "defaults.global.multiCluster.clusterName"
+    name  = "defaults.global.multiCluster.clusterName"
     value = "tetra"
   }
 
   set {
-    name = "defaults.global.multiCluster.enabled"
+    name  = "defaults.global.multiCluster.enabled"
     value = true
   }
 
   set {
-    name = "defaults.global.network"
+    name  = "defaults.global.network"
     value = "tetra"
   }
 
-  depends_on = [ helm_release.istio ]
+  depends_on = [helm_release.istio]
 }
 
 /*resource "helm_release" "istio_ingress" {

@@ -1,6 +1,6 @@
 resource "hcloud_placement_group" "placement_group" {
-  name = "${var.cluster_name}-placement-group"
-  type = "spread"
+  name   = "${var.cluster_name}-placement-group"
+  type   = "spread"
   labels = var.hetzner_labels
 }
 

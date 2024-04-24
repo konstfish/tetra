@@ -27,4 +27,4 @@ annotations:
   ingress:
     cert-manager.io/cluster-issuer: "letsencrypt-dns"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    # external-dns.alpha.kubernetes.io/hostname: "teleport.konst.fish"
+    external-dns.alpha.kubernetes.io/hostname: "teleport.konst.fish"

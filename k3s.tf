@@ -36,7 +36,7 @@ resource "local_file" "ansible_inventory" {
     }
   }
 
-  depends_on = [ hcloud_load_balancer_service.lb_service_6443 ]
+  depends_on = [hcloud_load_balancer_service.lb_service_6443]
 }
 
 output "controller_node_list" {

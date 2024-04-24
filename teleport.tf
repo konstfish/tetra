@@ -10,7 +10,7 @@ resource "kubernetes_namespace" "teleport_cluster" {
     }
   }
 
-  depends_on = [ local_file.ansible_inventory ]
+  depends_on = [local_file.ansible_inventory]
 
   lifecycle {
     ignore_changes = [
