@@ -26,9 +26,9 @@ ingress:
 sessionStorage:
   type: redis
   redis:
-    existingSecret: oauth2-proxy-redis
+    existingSecret: oauth2-proxy-zero-redis
     standalone:
-      connectionUrl: redis://oauth2-proxy-redis-headless:6379
+      connectionUrl: redis://oauth2-proxy-zero-redis-headless:6379
 
 redis:
   enabled: true
