@@ -47,10 +47,10 @@ variable "oauth_cookie_secret_zero" {
 
 // OAuth Negative
 resource "helm_release" "oauth2_proxy_negative" {
-  name             = "oauth2-proxy-negative"
-  repository       = "https://oauth2-proxy.github.io/manifests"
-  chart            = "oauth2-proxy"
-  namespace        = "oauth-proxy"
+  name       = "oauth2-proxy-negative"
+  repository = "https://oauth2-proxy.github.io/manifests"
+  chart      = "oauth2-proxy"
+  namespace  = "oauth-proxy"
 
   values = [
     file("${path.module}/cluster/helm/oauth/negative.yml"),
