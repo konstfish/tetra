@@ -125,3 +125,76 @@ variable "hetzner_labels" {
     "created_by" = "terraform"
   }
 }
+
+// Cloudflare
+variable "cloudflare_api_token" {
+  description = "The API Token for Cloudflare."
+  type        = string
+  sensitive   = true
+}
+
+variable "cloudflare_acount_id" {
+  description = "The Cloudflare Account ID."
+  type        = string
+}
+
+// longhorn
+variable "longhorn_s3_access_key" {
+  description = "The Access Key ID for the Longhorn S3 backup."
+  type        = string
+  sensitive   = true
+}
+
+variable "longhorn_s3_secret_key" {
+  description = "The Secret Key for the Longhorn S3 backup."
+  type        = string
+  sensitive   = true
+}
+
+variable "longhorn_s3_endpoint" {
+  description = "The S3 endpoint to use for Longhorn backups."
+  type        = string
+}
+
+variable "longhorn_s3_bucket" {
+  description = "The S3 bucket to use for Longhorn backups."
+  type        = string
+}
+
+// oauth proxy
+
+/// zero
+variable "oauth_client_id_zero" {
+  description = "OAuth client ID"
+  type        = string
+}
+
+variable "oauth_client_secret_zero" {
+  description = "OAuth client secret"
+  type        = string
+  sensitive   = true
+}
+
+variable "oauth_cookie_secret_zero" {
+  description = "OAuth cookie secret"
+  type        = string
+  sensitive   = true
+}
+
+/// negative
+variable "oauth_client_id_negative" {
+  description = "OAuth client ID"
+  type        = string
+}
+
+variable "oauth_client_secret_negative" {
+  description = "OAuth client secret"
+  type        = string
+  sensitive   = true
+}
+
+variable "oauth_cookie_secret_negative" {
+  description = "OAuth cookie secret"
+  type        = string
+  sensitive   = true
+}
