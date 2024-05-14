@@ -1,7 +1,0 @@
----
-# handlers file for nginx-configuration
-
-- name: Restart nginx service
-  ansible.builtin.service:
-    name: nginx
-    state: restarted

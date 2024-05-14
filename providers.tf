@@ -16,13 +16,13 @@ provider "http" {}
 
 provider "helm" {
   kubernetes {
-    config_path = "${path.module}/ansible/artifacts/tetra.yml"
+    config_path = "${path.module}/k3s-ansible/artifacts/tetra.yml"
     insecure    = "true"
   }
 }
 
 provider "kubernetes" {
-  config_path = "${path.module}/ansible/artifacts/tetra.yml"
+  config_path = "${path.module}/k3s-ansible/artifacts/tetra.yml"
   insecure    = "true"
 }
 

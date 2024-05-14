@@ -1,5 +1,0 @@
----
-# handlers file for basic-setup-oracle
-- name: Reload UFW
-  community.general.ufw:
-    state: reloaded
