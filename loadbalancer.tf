@@ -30,6 +30,8 @@ resource "hcloud_load_balancer_service" "lb_service_80" {
   listen_port      = 80
   destination_port = 80
 
+  proxyprotocol = true
+
   health_check {
     protocol = "tcp"
     port     = 80
@@ -46,6 +48,8 @@ resource "hcloud_load_balancer_service" "lb_service_443" {
   listen_port      = 443
   destination_port = 443
 
+  proxyprotocol = true
+
   health_check {
     protocol = "tcp"
     port     = 443
@@ -61,6 +65,8 @@ resource "hcloud_load_balancer_service" "lb_service_6443" {
 
   listen_port      = 6443
   destination_port = 6443
+
+  proxyprotocol = true
 
   health_check {
     protocol = "tcp"

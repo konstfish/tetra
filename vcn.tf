@@ -32,7 +32,8 @@ resource "hcloud_firewall" "default" {
     protocol  = "tcp"
     port      = "80"
     source_ips = [
-      join("/", [hcloud_load_balancer_network.lb_network.ip, "32"])
+      "0.0.0.0/0",
+      "::/0"
     ]
   }
 
@@ -41,7 +42,8 @@ resource "hcloud_firewall" "default" {
     protocol  = "tcp"
     port      = "443"
     source_ips = [
-      join("/", [hcloud_load_balancer_network.lb_network.ip, "32"])
+      "0.0.0.0/0",
+      "::/0"
     ]
   }
 
