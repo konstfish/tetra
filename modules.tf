@@ -50,6 +50,8 @@ module "ingress_nginx" {
 
   external_ip          = hcloud_load_balancer.lb.ipv4
   cloudflare_api_token = var.cloudflare_api_token
+  use_proxy_protocol   = true
+  cluster_domain       = join(".", [var.cluster_short_name, var.cluster_group, var.cloudflare_domain])
 
   depends_on = [local_file.ansible_inventory]
 }

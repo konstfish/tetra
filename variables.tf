@@ -13,8 +13,20 @@ variable "github_usernames" {
 
 // Cluster Settings
 /// General
+variable "cluster_group" {
+  description = "The name of the group."
+  type        = string
+  default     = "shoal"
+}
+
 variable "cluster_name" {
   description = "The name of the cluster."
+  type        = string
+  default     = "tetra"
+}
+
+variable "cluster_short_name" {
+  description = "The short name of the cluster."
   type        = string
   default     = "tetra"
 }
@@ -137,6 +149,18 @@ variable "cloudflare_acount_id" {
   description = "The Cloudflare Account ID."
   type        = string
 }
+
+variable "cloudflare_zone" {
+  description = "The Cloudflare Zone."
+  type        = string
+}
+
+variable "cloudflare_domain" {
+  description = "Cloudflare TLD"
+  type        = string
+  default = "konst.fish"
+}
+
 
 // longhorn
 variable "longhorn_s3_access_key" {
