@@ -28,13 +28,13 @@ resource "hcloud_load_balancer_service" "lb_service_80" {
   protocol         = "tcp"
 
   listen_port      = 80
-  destination_port = 80
+  destination_port = 30080
 
   proxyprotocol = true
 
   health_check {
     protocol = "tcp"
-    port     = 80
+    port     = 30080
 
     interval = 10
     timeout  = 5
@@ -46,13 +46,13 @@ resource "hcloud_load_balancer_service" "lb_service_443" {
   protocol         = "tcp"
 
   listen_port      = 443
-  destination_port = 443
+  destination_port = 30443
 
   proxyprotocol = true
 
   health_check {
     protocol = "tcp"
-    port     = 443
+    port     = 30443
 
     interval = 10
     timeout  = 5
